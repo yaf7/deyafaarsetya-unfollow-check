@@ -39,17 +39,214 @@ export default function ResultList({ unfollowers, followersCount, followingCount
     ? (((followingCount - unfollowers.length) / followingCount) * 100).toFixed(1)
     : "100";
 
-  const handleExportCSV = () => {
-    const csv = "Username,Profile URL\n" + unfollowers.map(([u, h]) =>
-      `${u},${h || `https://instagram.com/${u}`}`
-    ).join("\n");
-    const blob = new Blob([csv], { type: "text/csv" });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement("a");
-    a.href = url;
-    a.download = "unfollowers.csv";
-    a.click();
-    URL.revokeObjectURL(url);
+  const handleExportPDF = () => {
+    const today = new Date().toLocaleDateString('id-ID', {
+      weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'
+    });
+
+    const tableRows = unfollowers.map(([u, h], i) => `
+      <tr class="${i % 2 === 0 ? 'even' : 'odd'}">
+        <td class="center text-muted">${i + 1}</td>
+        <td class="bold text-dark">@${u}</td>
+        <td><a href="${h || `https://instagram.com/${u}`}" class="link" target="_blank">${h || `https://instagram.com/${u}`}</a></td>
+      </tr>
+    `).join('');
+
+    const printWindow = window.open('', '_blank');
+    if (!printWindow) return;
+
+    printWindow.document.write(`
+      <!DOCTYPE html>
+      <html>
+        <head>
+          <title>Laporan Unfollowers - Unfollytics</title>
+          <style>
+            @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap');
+            
+            :root {
+              --primary: #00e5ff;
+              --primary-dark: #00b0ff;
+              --secondary: #7000ff;
+              --text-main: #1e293b;
+              --text-muted: #64748b;
+              --border: #e2e8f0;
+            }
+
+            body { 
+              font-family: 'Inter', sans-serif; 
+              padding: 40px; 
+              color: var(--text-main); 
+              background-color: #ffffff;
+              line-height: 1.6;
+            }
+
+            /* --- Header Styling --- */
+            .report-header {
+              display: flex;
+              justify-content: space-between;
+              align-items: flex-end;
+              border-bottom: 3px solid var(--primary);
+              padding-bottom: 24px;
+              margin-bottom: 32px;
+            }
+
+            .brand {
+              font-family: 'Outfit', sans-serif;
+              display: flex;
+              align-items: center;
+              gap: 16px;
+            }
+
+            .brand-logo {
+              width: 56px;
+              height: auto;
+              object-fit: contain;
+            }
+
+            .brand-title {
+              font-size: 32px;
+              font-weight: 800;
+              color: var(--text-main);
+              margin: 0 0 4px 0;
+              letter-spacing: -1px;
+            }
+
+            .brand-subtitle {
+              font-size: 13px;
+              font-weight: 600;
+              color: var(--secondary);
+              text-transform: uppercase;
+              letter-spacing: 1.5px;
+            }
+
+            .report-meta {
+              text-align: right;
+            }
+
+            .meta-date {
+              font-size: 13px;
+              color: var(--text-muted);
+              font-weight: 500;
+              margin-bottom: 8px;
+            }
+
+            .badge {
+              display: inline-block;
+              background-color: #f1f5f9;
+              color: var(--text-main);
+              padding: 6px 12px;
+              border-radius: 8px;
+              font-size: 12px;
+              font-weight: 600;
+              border: 1px solid var(--border);
+            }
+
+            /* --- Table Styling --- */
+            table { 
+              width: 100%; 
+              border-collapse: separate; 
+              border-spacing: 0;
+              border-radius: 12px;
+              overflow: hidden;
+              border: 1px solid var(--border);
+            }
+
+            th, td {
+              padding: 14px 16px;
+              text-align: left;
+              border-bottom: 1px solid var(--border);
+              font-size: 13px;
+            }
+
+            th { 
+              background-color: #f8fafc; 
+              font-family: 'Outfit', sans-serif;
+              font-weight: 600; 
+              color: var(--text-main); 
+              text-transform: uppercase;
+              font-size: 12px;
+              letter-spacing: 0.5px;
+            }
+
+            tr:last-child td {
+              border-bottom: none;
+            }
+
+            .even { background-color: #ffffff; }
+            .odd { background-color: #fcfcfd; }
+
+            /* --- Typography Utils --- */
+            .center { text-align: center; }
+            .bold { font-weight: 600; }
+            .text-dark { color: #0f172a; }
+            .text-muted { color: var(--text-muted); }
+            .link { color: var(--primary-dark); text-decoration: none; font-weight: 500; }
+
+            /* --- Footer --- */
+            .report-footer {
+              margin-top: 40px;
+              text-align: center;
+              font-size: 11px;
+              color: var(--text-muted);
+              padding-top: 20px;
+              border-top: 1px dashed var(--border);
+            }
+
+            /* --- Print Optimizations --- */
+            @media print {
+              @page { margin: 15mm; size: A4 portrait; }
+              body { -webkit-print-color-adjust: exact; print-color-adjust: exact; padding: 0; }
+              .report-header { border-bottom-color: var(--primary) !important; }
+              a.link { color: var(--primary-dark) !important; }
+              th { background-color: #f8fafc !important; }
+            }
+          </style>
+        </head>
+        <body>
+          
+          <div class="report-header">
+            <div class="brand">
+              <img src="${window.location.origin}/Unfollytics_logo.png" class="brand-logo" alt="Logo" />
+              <div>
+                <h1 class="brand-title">Unfollytics</h1>
+                <div class="brand-subtitle">by Deyafa Arsetya</div>
+              </div>
+            </div>
+            <div class="report-meta">
+              <div class="meta-date">${today}</div>
+              <div class="badge">Total: ${unfollowers.length} Akun</div>
+            </div>
+          </div>
+
+          <table>
+            <thead>
+              <tr>
+                <th class="center" style="width: 60px;">No</th>
+                <th style="width: 35%;">Username Instagram</th>
+                <th>Tautan Profil</th>
+              </tr>
+            </thead>
+            <tbody>
+              ${tableRows}
+            </tbody>
+          </table>
+
+          <div class="report-footer">
+            Dokumen ini digenerate secara otomatis oleh Unfollytics pada ${today}. <br>
+            Privasi Terjamin &bull; 100% Aman &bull; Proses Lokal
+          </div>
+
+          <script>
+            window.onload = () => {
+              setTimeout(() => {
+                window.print();
+              }, 500); // give time for Google Fonts to load
+            };
+          </script>
+        </body>
+      </html>
+    `);
+    printWindow.document.close();
   };
 
   return (
@@ -250,16 +447,18 @@ export default function ResultList({ unfollowers, followersCount, followingCount
         </button>
         <button
           className="btn-secondary"
-          onClick={handleExportCSV}
+          onClick={handleExportPDF}
           style={{ borderColor: "rgba(0, 229, 255, 0.15)", color: "var(--accent-1)" }}
         >
           <span style={{ display: "flex", alignItems: "center", gap: "6px" }}>
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
-              <polyline points="7 10 12 15 17 10" />
-              <line x1="12" y1="15" x2="12" y2="3" />
+              <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+              <polyline points="14 2 14 8 20 8" />
+              <line x1="16" y1="13" x2="8" y2="13" />
+              <line x1="16" y1="17" x2="8" y2="17" />
+              <polyline points="10 9 9 9 8 9" />
             </svg>
-            Export CSV
+            Export PDF
           </span>
         </button>
       </div>

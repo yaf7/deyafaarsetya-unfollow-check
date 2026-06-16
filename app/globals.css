@@ -1,7 +1,7 @@
 @import "tailwindcss";
 
 :root {
-  --background: #030508;
+  --background: linear-gradient(145deg, #0d0621 0%, #050a1f 50%, #020205 100%);
   --foreground: #f0f0f5;
   --card-bg: rgba(255, 255, 255, 0.025);
   --card-border: rgba(255, 255, 255, 0.06);
@@ -46,6 +46,7 @@ html {
 
 body {
   background: var(--background);
+  background-attachment: fixed;
   color: var(--foreground);
   font-family: var(--font-sans), 'Inter', system-ui, -apple-system, sans-serif;
   overflow-x: hidden;

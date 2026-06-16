@@ -94,25 +94,37 @@ export default function Home() {
             {/* Mini logo */}
             <div
               style={{
-                width: "32px",
-                height: "32px",
-                borderRadius: "9px",
-                background: "var(--accent-gradient)",
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "center",
-                boxShadow: "0 2px 12px rgba(0, 229, 255, 0.2)",
               }}
             >
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" />
-                <circle cx="9" cy="7" r="4" />
-                <line x1="17" y1="11" x2="23" y2="11" />
-              </svg>
+              <img 
+                src="/Unfollytics_logo.png" 
+                alt="Unfollytics Logo" 
+                style={{ width: "150px", height: "auto", objectFit: "contain" }}
+              />
             </div>
-            <span style={{ fontWeight: 700, fontSize: "0.9375rem", letterSpacing: "-0.02em" }}>
-              UnfollowCheck
-            </span>
+            <div style={{ display: "flex", flexDirection: "column", justifyContent: "center", fontFamily: "var(--font-outfit), sans-serif" }}>
+              <span style={{ 
+                fontWeight: 800, 
+                fontSize: "1.25rem", 
+                letterSpacing: "-0.01em",
+                color: "#ffffff",
+                lineHeight: 1.1
+              }}>
+                Unfollytics
+              </span>
+              <span style={{ 
+                fontWeight: 500, 
+                fontSize: "0.6875rem", 
+                letterSpacing: "0.08em",
+                color: "rgba(255, 255, 255, 0.8)",
+                textTransform: "uppercase",
+              }}>
+                by Deyafa Arsetya
+              </span>
+            </div>
           </div>
           <div className="badge badge-privacy">
             <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
@@ -649,7 +661,7 @@ export default function Home() {
           }}
         >
           <p>
-            Developed by Deyafa Arsetya
+            © 2026 Unfollytics. Developed with privacy in mind by Deyafa Arsetya.
           </p>
         </footer>
       </div>
