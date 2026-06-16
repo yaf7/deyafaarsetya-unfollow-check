@@ -9,7 +9,7 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "UnfollowCheck — Instagram Unfollower Detector",
+  title: "Unfollytics",
   description:
     "Cek siapa yang tidak follow back kamu di Instagram secara instan. Upload file data Instagram kamu dan temukan unfollowers dalam hitungan detik.",
   keywords: [
@@ -20,7 +20,7 @@ export const metadata: Metadata = {
     "who unfollowed me",
   ],
   openGraph: {
-    title: "UnfollowCheck — Instagram Unfollower Detector",
+    title: "Unfollytics",
     description:
       "Cek siapa yang tidak follow back kamu di Instagram. 100% privat, tanpa login.",
     type: "website",

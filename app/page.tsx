@@ -101,7 +101,7 @@ export default function Home() {
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "center",
-                boxShadow: "0 2px 12px rgba(225, 48, 108, 0.2)",
+                boxShadow: "0 2px 12px rgba(0, 229, 255, 0.2)",
               }}
             >
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
@@ -233,7 +233,7 @@ export default function Home() {
               <div style={{
                 height: "1px",
                 width: "100%",
-                background: "linear-gradient(90deg, transparent, rgba(225, 48, 108, 0.2), transparent)",
+                background: "linear-gradient(90deg, transparent, rgba(0, 229, 255, 0.2), transparent)",
                 margin: "1rem 0 2rem 0",
               }} />
 
@@ -309,8 +309,8 @@ export default function Home() {
                     width: "36px",
                     height: "36px",
                     borderRadius: "10px",
-                    background: "linear-gradient(135deg, rgba(225, 48, 108, 0.1), rgba(131, 58, 180, 0.05))",
-                    border: "1px solid rgba(225, 48, 108, 0.12)",
+                    background: "linear-gradient(135deg, rgba(0, 229, 255, 0.1), rgba(213, 0, 249, 0.05))",
+                    border: "1px solid rgba(0, 229, 255, 0.12)",
                     display: "flex",
                     alignItems: "center",
                     justifyContent: "center",
@@ -371,8 +371,8 @@ export default function Home() {
                         height: "28px",
                         minWidth: "28px",
                         borderRadius: "8px",
-                        background: "linear-gradient(135deg, rgba(225, 48, 108, 0.12), rgba(131, 58, 180, 0.08))",
-                        border: "1px solid rgba(225, 48, 108, 0.15)",
+                        background: "linear-gradient(135deg, rgba(0, 229, 255, 0.12), rgba(213, 0, 249, 0.08))",
+                        border: "1px solid rgba(0, 229, 255, 0.15)",
                         display: "flex",
                         alignItems: "center",
                         justifyContent: "center",
@@ -415,8 +415,8 @@ export default function Home() {
                     width: "36px",
                     height: "36px",
                     borderRadius: "10px",
-                    background: "linear-gradient(135deg, rgba(225, 48, 108, 0.1), rgba(131, 58, 180, 0.05))",
-                    border: "1px solid rgba(225, 48, 108, 0.12)",
+                    background: "linear-gradient(135deg, rgba(0, 229, 255, 0.1), rgba(213, 0, 249, 0.05))",
+                    border: "1px solid rgba(0, 229, 255, 0.12)",
                     display: "flex",
                     alignItems: "center",
                     justifyContent: "center",
@@ -465,8 +465,8 @@ export default function Home() {
                         height: "28px",
                         minWidth: "28px",
                         borderRadius: "8px",
-                        background: "linear-gradient(135deg, rgba(225, 48, 108, 0.12), rgba(131, 58, 180, 0.08))",
-                        border: "1px solid rgba(225, 48, 108, 0.15)",
+                        background: "linear-gradient(135deg, rgba(0, 229, 255, 0.12), rgba(213, 0, 249, 0.08))",
+                        border: "1px solid rgba(0, 229, 255, 0.15)",
                         display: "flex",
                         alignItems: "center",
                         justifyContent: "center",
@@ -548,8 +548,8 @@ export default function Home() {
                 <div style={{ display: "flex", alignItems: "center", gap: "0.75rem" }}>
                   <div style={{
                     width: "40px", height: "40px", borderRadius: "12px",
-                    background: "linear-gradient(135deg, rgba(225, 48, 108, 0.1), rgba(131, 58, 180, 0.06))",
-                    border: "1px solid rgba(225, 48, 108, 0.12)",
+                    background: "linear-gradient(135deg, rgba(0, 229, 255, 0.1), rgba(213, 0, 249, 0.06))",
+                    border: "1px solid rgba(0, 229, 255, 0.12)",
                     display: "flex", alignItems: "center", justifyContent: "center",
                   }}>
                     <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--accent-1)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -649,7 +649,7 @@ export default function Home() {
           }}
         >
           <p>
-            Dibuat dengan ❤️ — Data kamu tidak pernah dikirim ke server manapun.
+            Developed by Deyafa Arsetya
           </p>
         </footer>
       </div>

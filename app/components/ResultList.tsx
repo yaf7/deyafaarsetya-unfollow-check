@@ -23,11 +23,11 @@ export default function ResultList({ unfollowers, followersCount, followingCount
   }, [unfollowers, search, sortAsc]);
 
   const colors = [
-    "linear-gradient(135deg, #FCAF45, #F77737)",
-    "linear-gradient(135deg, #F77737, #E1306C)",
-    "linear-gradient(135deg, #E1306C, #C13584)",
-    "linear-gradient(135deg, #C13584, #833AB4)",
-    "linear-gradient(135deg, #833AB4, #5851DB)",
+    "linear-gradient(135deg, #7000ff, #2979ff)",
+    "linear-gradient(135deg, #2979ff, #00e5ff)",
+    "linear-gradient(135deg, #00e5ff, #d500f9)",
+    "linear-gradient(135deg, #d500f9, #00b0ff)",
+    "linear-gradient(135deg, #00b0ff, #5851DB)",
     "linear-gradient(135deg, #405DE6, #5851DB)",
   ];
 
@@ -60,8 +60,8 @@ export default function ResultList({ unfollowers, followersCount, followingCount
         style={{
           position: "relative",
           borderRadius: "var(--radius-lg)",
-          background: "linear-gradient(165deg, rgba(225, 48, 108, 0.08), rgba(131, 58, 180, 0.04), rgba(255,255,255,0.02))",
-          border: "1px solid rgba(225, 48, 108, 0.12)",
+          background: "linear-gradient(165deg, rgba(0, 229, 255, 0.08), rgba(213, 0, 249, 0.04), rgba(255,255,255,0.02))",
+          border: "1px solid rgba(0, 229, 255, 0.12)",
           padding: "2rem",
           marginBottom: "1.5rem",
           overflow: "hidden",
@@ -70,12 +70,12 @@ export default function ResultList({ unfollowers, followersCount, followingCount
         {/* Top edge reflection */}
         <div style={{
           position: "absolute", top: 0, left: 0, right: 0, height: "1px",
-          background: "linear-gradient(90deg, transparent 5%, rgba(225, 48, 108, 0.25) 50%, transparent 95%)",
+          background: "linear-gradient(90deg, transparent 5%, rgba(0, 229, 255, 0.25) 50%, transparent 95%)",
         }} />
         {/* Inner glow */}
         <div style={{
           position: "absolute", top: "-60%", right: "-20%", width: "400px", height: "400px",
-          borderRadius: "50%", background: "radial-gradient(circle, rgba(225, 48, 108, 0.06) 0%, transparent 70%)",
+          borderRadius: "50%", background: "radial-gradient(circle, rgba(0, 229, 255, 0.06) 0%, transparent 70%)",
           filter: "blur(40px)", pointerEvents: "none",
         }} />
 
@@ -193,7 +193,7 @@ export default function ResultList({ unfollowers, followersCount, followingCount
                 borderRadius: "3px",
                 background: "var(--accent-gradient)",
                 transition: "width 1.5s cubic-bezier(0.4, 0, 0.2, 1)",
-                boxShadow: "0 0 12px rgba(225, 48, 108, 0.3)",
+                boxShadow: "0 0 12px rgba(0, 229, 255, 0.3)",
               }} />
             </div>
           </div>
@@ -251,7 +251,7 @@ export default function ResultList({ unfollowers, followersCount, followingCount
         <button
           className="btn-secondary"
           onClick={handleExportCSV}
-          style={{ borderColor: "rgba(225, 48, 108, 0.15)", color: "var(--accent-1)" }}
+          style={{ borderColor: "rgba(0, 229, 255, 0.15)", color: "var(--accent-1)" }}
         >
           <span style={{ display: "flex", alignItems: "center", gap: "6px" }}>
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -372,8 +372,8 @@ export default function ResultList({ unfollowers, followersCount, followingCount
                 fontSize: "0.6875rem",
                 fontWeight: 600,
                 color: "var(--accent-1)",
-                background: "linear-gradient(135deg, rgba(225, 48, 108, 0.1), rgba(131, 58, 180, 0.06))",
-                border: "1px solid rgba(225, 48, 108, 0.15)",
+                background: "linear-gradient(135deg, rgba(0, 229, 255, 0.1), rgba(213, 0, 249, 0.06))",
+                border: "1px solid rgba(0, 229, 255, 0.15)",
                 borderRadius: "10px",
                 textDecoration: "none",
                 flexShrink: 0,
@@ -382,14 +382,14 @@ export default function ResultList({ unfollowers, followersCount, followingCount
               }}
               onClick={(e) => e.stopPropagation()}
               onMouseEnter={(e) => {
-                (e.target as HTMLElement).style.background = "linear-gradient(135deg, rgba(225, 48, 108, 0.18), rgba(131, 58, 180, 0.1))";
-                (e.target as HTMLElement).style.borderColor = "rgba(225, 48, 108, 0.3)";
+                (e.target as HTMLElement).style.background = "linear-gradient(135deg, rgba(0, 229, 255, 0.18), rgba(213, 0, 249, 0.1))";
+                (e.target as HTMLElement).style.borderColor = "rgba(0, 229, 255, 0.3)";
                 (e.target as HTMLElement).style.transform = "scale(1.04)";
-                (e.target as HTMLElement).style.boxShadow = "0 4px 12px rgba(225, 48, 108, 0.15)";
+                (e.target as HTMLElement).style.boxShadow = "0 4px 12px rgba(0, 229, 255, 0.15)";
               }}
               onMouseLeave={(e) => {
-                (e.target as HTMLElement).style.background = "linear-gradient(135deg, rgba(225, 48, 108, 0.1), rgba(131, 58, 180, 0.06))";
-                (e.target as HTMLElement).style.borderColor = "rgba(225, 48, 108, 0.15)";
+                (e.target as HTMLElement).style.background = "linear-gradient(135deg, rgba(0, 229, 255, 0.1), rgba(213, 0, 249, 0.06))";
+                (e.target as HTMLElement).style.borderColor = "rgba(0, 229, 255, 0.15)";
                 (e.target as HTMLElement).style.transform = "scale(1)";
                 (e.target as HTMLElement).style.boxShadow = "none";
               }}

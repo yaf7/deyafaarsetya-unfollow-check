@@ -227,7 +227,7 @@ export default function FileUploader({
         <p
           style={{
             fontSize: "0.8125rem",
-            color: isLoaded ? "rgba(52, 211, 153, 0.6)" : "var(--text-tertiary)",
+            color: isLoaded ? "rgba(52, 211, 153, 0.8)" : "var(--text-secondary)",
             lineHeight: 1.4,
           }}
         >
