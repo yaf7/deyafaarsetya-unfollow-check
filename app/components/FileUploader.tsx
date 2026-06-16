@@ -11,6 +11,92 @@ interface FileUploaderProps {
   count: number;
 }
 
+/**
+ * Extracts username from an Instagram data item.
+ * Handles multiple Instagram export formats:
+ * - string_list_data[0].value (most common)
+ * - title field (fallback when string_list_data is empty or value is "")
+ * - href field parsing as last resort
+ */
+function extractUsername(item: Record<string, unknown>): [string, string] {
+  const stringListData = item.string_list_data as
+    | Array<{ value?: string; href?: string; timestamp?: number }>
+    | undefined;
+
+  let username = "";
+  let href = "";
+
+  // Try string_list_data first
+  if (Array.isArray(stringListData) && stringListData.length > 0) {
+    const firstEntry = stringListData[0];
+    username = (firstEntry?.value || "").trim();
+    href = (firstEntry?.href || "").trim();
+  }
+
+  // Fallback: use 'title' field if username is still empty
+  if (!username && typeof item.title === "string" && item.title.trim()) {
+    username = item.title.trim();
+  }
+
+  // Fallback: try to extract username from href
+  if (!username && href) {
+    const match = href.match(/instagram\.com\/([^/?#]+)/);
+    if (match) {
+      username = match[1];
+    }
+  }
+
+  // Build href from username if not present
+  if (username && !href) {
+    href = `https://www.instagram.com/${username}`;
+  }
+
+  return [username, href];
+}
+
+/**
+ * Extracts the data array from various Instagram JSON export formats.
+ * Handles: plain arrays, relationships_following, relationships_followers,
+ * and any other top-level key containing an array of objects with string_list_data.
+ */
+function extractDataArray(json: unknown): Record<string, unknown>[] {
+  // Format 1: Direct array (common for followers_1.json)
+  if (Array.isArray(json)) {
+    return json;
+  }
+
+  // Format 2: Object with known keys
+  if (json && typeof json === "object") {
+    const obj = json as Record<string, unknown>;
+
+    // Check known Instagram keys first
+    if (Array.isArray(obj.relationships_following)) {
+      return obj.relationships_following;
+    }
+    if (Array.isArray(obj.relationships_followers)) {
+      return obj.relationships_followers;
+    }
+
+    // Fallback: find ANY key that contains an array of objects with string_list_data or title
+    for (const key of Object.keys(obj)) {
+      const val = obj[key];
+      if (Array.isArray(val) && val.length > 0) {
+        const first = val[0];
+        if (
+          first &&
+          typeof first === "object" &&
+          ("string_list_data" in first || "title" in first)
+        ) {
+          console.log(`[UnfollowCheck] Found data under key: "${key}"`);
+          return val;
+        }
+      }
+    }
+  }
+
+  return [];
+}
+
 export default function FileUploader({
   label,
   description,
@@ -30,45 +116,38 @@ export default function FileUploader({
       reader.onload = (e) => {
         try {
           const json = JSON.parse(e.target?.result as string);
-          // Instagram data format: array of objects with string_list_data
-          let usernames: string[][] = [];
-          if (Array.isArray(json)) {
-            usernames = json.map((item: Record<string, unknown>) => {
-              const data = (
-                item.string_list_data as Array<{
-                  value?: string;
-                  href?: string;
-                }>
-              )?.[0];
-              return [data?.value || "", data?.href || ""];
-            });
-          } else if (json.relationships_following) {
-            usernames = json.relationships_following.map(
-              (item: Record<string, unknown>) => {
-                const data = (
-                  item.string_list_data as Array<{
-                    value?: string;
-                    href?: string;
-                  }>
-                )?.[0];
-                return [data?.value || "", data?.href || ""];
-              }
-            );
-          } else if (json.relationships_followers) {
-            usernames = json.relationships_followers.map(
-              (item: Record<string, unknown>) => {
-                const data = (
-                  item.string_list_data as Array<{
-                    value?: string;
-                    href?: string;
-                  }>
-                )?.[0];
-                return [data?.value || "", data?.href || ""];
-              }
+
+          // Extract the data array from whatever format the JSON is in
+          const dataArray = extractDataArray(json);
+
+          // Parse each item to extract username and href
+          const usernames: string[][] = dataArray
+            .map((item) => extractUsername(item))
+            .filter(([username]) => username.length > 0);
+
+          // Debug logging
+          console.log(`[UnfollowCheck] File: ${file.name}`);
+          console.log(`[UnfollowCheck] Raw items found: ${dataArray.length}`);
+          console.log(`[UnfollowCheck] Valid usernames: ${usernames.length}`);
+          if (usernames.length > 0) {
+            console.log(
+              `[UnfollowCheck] First 5 usernames:`,
+              usernames.slice(0, 5).map(([u]) => u)
             );
           }
-          onFileLoaded(usernames.filter((u) => u[0]));
-        } catch {
+          if (dataArray.length > 0 && usernames.length === 0) {
+            console.warn(
+              `[UnfollowCheck] WARNING: Items found but no usernames extracted!`
+            );
+            console.warn(
+              `[UnfollowCheck] Sample item:`,
+              JSON.stringify(dataArray[0], null, 2)
+            );
+          }
+
+          onFileLoaded(usernames);
+        } catch (err) {
+          console.error("[UnfollowCheck] Parse error:", err);
           alert("Format file tidak valid. Pastikan file JSON dari Instagram.");
         }
       };

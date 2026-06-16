@@ -15,10 +15,44 @@ export default function Home() {
     setIsProcessing(true);
 
     setTimeout(() => {
-      const followerSet = new Set(followers.map(([u]) => u.toLowerCase()));
-      const result = following.filter(
-        ([u]) => !followerSet.has(u.toLowerCase())
+      // Normalize usernames: trim whitespace, lowercase, remove leading @
+      const normalize = (username: string) =>
+        username.trim().toLowerCase().replace(/^@/, "");
+
+      const followerSet = new Set(
+        followers.map(([u]) => normalize(u))
       );
+
+      const result = following.filter(
+        ([u]) => !followerSet.has(normalize(u))
+      );
+
+      // Debug logging
+      console.log("=== UnfollowCheck Analysis ===");
+      console.log(`Followers count: ${followers.length}`);
+      console.log(`Following count: ${following.length}`);
+      console.log(`Follower Set size: ${followerSet.size}`);
+      console.log(`Unfollowers found: ${result.length}`);
+      if (result.length > 0) {
+        console.log(
+          "First 10 unfollowers:",
+          result.slice(0, 10).map(([u]) => u)
+        );
+      }
+      if (followers.length > 0) {
+        console.log(
+          "Sample followers (first 5):",
+          followers.slice(0, 5).map(([u]) => u)
+        );
+      }
+      if (following.length > 0) {
+        console.log(
+          "Sample following (first 5):",
+          following.slice(0, 5).map(([u]) => u)
+        );
+      }
+      console.log("==============================");
+
       setUnfollowers(result);
       setIsProcessing(false);
     }, 1000);
@@ -126,9 +160,9 @@ export default function Home() {
                   boxShadow: "0 4px 20px rgba(0,0,0,0.1)",
                 }}>
                   <span style={{ fontSize: "0.875rem" }}>✨</span>
-                  <span style={{ 
-                    fontSize: "0.75rem", 
-                    fontWeight: 600, 
+                  <span style={{
+                    fontSize: "0.75rem",
+                    fontWeight: 600,
                     color: "var(--text-secondary)",
                     letterSpacing: "0.03em",
                     textTransform: "uppercase"
@@ -153,7 +187,7 @@ export default function Home() {
                     Tidak Follow Back
                   </span>
                 </h1>
-                
+
                 <p
                   style={{
                     color: "var(--text-secondary)",
@@ -179,17 +213,17 @@ export default function Home() {
                   fontWeight: 500,
                 }}>
                   <div style={{ display: "flex", alignItems: "center", gap: "0.375rem" }}>
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" /></svg>
                     <span>Anti-Banned</span>
                   </div>
                   <div style={{ width: "4px", height: "4px", borderRadius: "50%", background: "currentColor", opacity: 0.5 }} />
                   <div style={{ display: "flex", alignItems: "center", gap: "0.375rem" }}>
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="m18 16 4-4-4-4"/><path d="m6 8-4 4 4 4"/><path d="m14.5 4-5 16"/></svg>
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="m18 16 4-4-4-4" /><path d="m6 8-4 4 4 4" /><path d="m14.5 4-5 16" /></svg>
                     <span>Tanpa Server</span>
                   </div>
                   <div style={{ width: "4px", height: "4px", borderRadius: "50%", background: "currentColor", opacity: 0.5 }} />
                   <div style={{ display: "flex", alignItems: "center", gap: "0.375rem" }}>
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10" /><polyline points="12 6 12 12 16 14" /></svg>
                     <span>Hitungan Detik</span>
                   </div>
                 </div>
@@ -533,7 +567,7 @@ export default function Home() {
                     </h2>
                     <p style={{ fontSize: "0.6875rem", color: "var(--text-tertiary)", marginTop: "2px", display: "flex", alignItems: "center", gap: "4px" }}>
                       <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="var(--success)" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
-                        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
                       </svg>
                       Diproses lokal di browser kamu
                     </p>

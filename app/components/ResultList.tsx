@@ -31,8 +31,8 @@ export default function ResultList({ unfollowers, followersCount, followingCount
     "linear-gradient(135deg, #405DE6, #5851DB)",
   ];
 
-  const unfollowRate = followingCount > 0 
-    ? ((unfollowers.length / followingCount) * 100).toFixed(1) 
+  const unfollowRate = followingCount > 0
+    ? ((unfollowers.length / followingCount) * 100).toFixed(1)
     : "0";
 
   const mutualRate = followingCount > 0
@@ -40,7 +40,7 @@ export default function ResultList({ unfollowers, followersCount, followingCount
     : "100";
 
   const handleExportCSV = () => {
-    const csv = "Username,Profile URL\n" + unfollowers.map(([u, h]) => 
+    const csv = "Username,Profile URL\n" + unfollowers.map(([u, h]) =>
       `${u},${h || `https://instagram.com/${u}`}`
     ).join("\n");
     const blob = new Blob([csv], { type: "text/csv" });
@@ -302,7 +302,7 @@ export default function ResultList({ unfollowers, followersCount, followingCount
               background: `linear-gradient(135deg, ${colors[i % colors.length].replace("linear-gradient(135deg, ", "").replace(")", "").split(",")[0].trim()}08, transparent)`,
               opacity: 0, transition: "opacity 0.3s ease", pointerEvents: "none",
             }} />
-            
+
             {/* Avatar */}
             <div
               style={{
