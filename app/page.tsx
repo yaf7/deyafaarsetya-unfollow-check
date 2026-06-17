@@ -99,25 +99,25 @@ export default function Home() {
                 justifyContent: "center",
               }}
             >
-              <img 
-                src="/Unfollytics_logo.png" 
-                alt="Unfollytics Logo" 
+              <img
+                src="/Unfollytics_logo.png"
+                alt="Unfollytics Logo"
                 style={{ width: "150px", height: "auto", objectFit: "contain" }}
               />
             </div>
             <div style={{ display: "flex", flexDirection: "column", justifyContent: "center", fontFamily: "var(--font-outfit), sans-serif" }}>
-              <span style={{ 
-                fontWeight: 800, 
-                fontSize: "1.25rem", 
+              <span style={{
+                fontWeight: 800,
+                fontSize: "1.25rem",
                 letterSpacing: "-0.01em",
                 color: "#ffffff",
                 lineHeight: 1.1
               }}>
                 Unfollytics
               </span>
-              <span style={{ 
-                fontWeight: 500, 
-                fontSize: "0.6875rem", 
+              <span style={{
+                fontWeight: 500,
+                fontSize: "0.6875rem",
                 letterSpacing: "0.08em",
                 color: "rgba(255, 255, 255, 0.8)",
                 textTransform: "uppercase",
